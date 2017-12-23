@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/stat.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<string.h>
+
+int main(int argc,char *argv[])
+{
+	int filedes;
+	char buffer,out[100];
+	int i,s,d,p;
+	mkdir("Assignment",0700);
+	filedes=open(argv[1],0400);
+	chdir("Assignment");
+	strcat(out,"output_");
+	strcat(out,argv[1]);
+	d=creat(out,0600);
+	int size=lseek(filedes,(off_t) 0,SEEK_END);
+	for(i=size-2;i>=0;i--){
+		lseek(filedes,(off_t) i,SEEK_SET);
+		p=read(filedes,&buffer,1);
+		p=write(d,&buffer,1);
+	}
+	return 0;
+}
+
+
+
